@@ -1,19 +1,24 @@
-name: Display GitHub Secrets and Variables
+name: Display GitHub Secrets and Environment Variables
 
 on:
-  workflow_dispatch: # Allows manual triggering of this workflow
+  workflow_dispatch: # Allows manual triggering of the workflow
 
 jobs:
   display:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Display GitHub Secrets (Names Only)
+      - name: Display Environment Variable
         run: |
-          echo "Secrets Added to This Workflow:"
-          echo "SECRET_1: Defined"
-          echo "SECRET_2: Defined"
+          echo "Environment Variable VALUE:"
+          echo $IP
         env:
-          SECRET_1: ${{ secrets.TEST }}
-          SECRET_2: ${{ secrets.IP }}
+          MY_ENV_VARIABLE: ${{ vars.IP }} # Reference your environment variable here
+
+      - name: Display Secret (Redacted in Logs)
+        run: |
+          echo "Secret VALUE:"
+          echo $MY_SECRET
+        env:
+          MY_SECRET: ${{ secrets.TEST }} # Reference your GitHub secret here
 
