@@ -1,27 +1,25 @@
-name: Deploy to B2C
+name: Create File on Remote Server
 
 on:
-  workflow_dispatch: # Only manual triggering allowed
+  workflow_dispatch: # Allows manual triggering of the workflow
 
 jobs:
-  deploy:
+  create-file:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout the repository
-      - name: Checkout Code
+      # Checkout the repository (optional if you need code access)
+      - name: Checkout code
         uses: actions/checkout@v3
 
-      # Step 2: Set up SSH
-      - name: Set up SSH
-        uses: webfactory/ssh-agent@v0.5.3
+      # Create a file on the remote server
+      - name: SSH into the server and create a file
+        uses: appleboy/ssh-action@v0.1.8
         with:
-          host: 3.110.90.168
-          username: ubuntu
-          key: ${{ secrets.PRIVATE_KEY }}
-          port: 22
-
-      # Step 3: Rsync to EC2 instance
-      - name: Deploy to B2C Server
-        run: |
-          rsync -avz --exclude=logs/* ./ ubuntu@3.110.90.168:/home/ubuntu/test/backend
+          host: 3.110.90.168          # Add your remote server IP in GitHub Secrets
+          username: ubuntu      # Add your username in GitHub Secrets
+          key: ${{ secrets.PRIVATE_KEY }}            # Add your private SSH key in GitHub Secrets
+          port: 22                                   # Default SSH port
+          script: |
+            echo "Hello, this is a test file!" > ~/test.txt
+            ls -l ~/test.txt
