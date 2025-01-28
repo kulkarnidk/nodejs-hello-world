@@ -23,4 +23,4 @@ jobs:
       # Rsync folder to EC2 server
       - name: Deploy folder to EC2 instance
         run: |
-          rsync -avz --exclude=logs/* ./ ubuntu@3.110.90.168:/home/ubuntu/test/backend
+          rsync -avz ./ ubuntu@3.110.90.168:/home/ubuntu/test/backend
