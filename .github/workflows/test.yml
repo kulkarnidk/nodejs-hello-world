@@ -25,7 +25,7 @@ jobs:
           ssh-keyscan -H 3.110.90.168 >> ~/.ssh/known_hosts
           cat ~/.ssh/known_hosts # For debugging, you can check the added key
 
-      # Rsync folder to EC2 server
+      # Rsync folder to EC2 server excluding .git and .github
       - name: Deploy folder to EC2 instance
         run: |
-          rsync -avz --exclude=logs/* ./ ubuntu@3.110.90.168:/home/ubuntu/test/backend
+          rsync -avz --exclude='.git/*' --exclude='.github/*' ./ ubuntu@3.110.90.168:/home/ubuntu/test/backend
