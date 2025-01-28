@@ -1,25 +1,26 @@
-name: Create File on Remote Server
+name: Deploy Folder to Remote Server
 
 on:
   workflow_dispatch: # Allows manual triggering of the workflow
 
 jobs:
-  create-file:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout the repository (optional if you need code access)
+      # Checkout the repository
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Create a file on the remote server
-      - name: SSH into the server and create a file
-        uses: appleboy/ssh-action@v0.1.8
+      # Set up SSH key to connect to the remote EC2 instance
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.3
         with:
-          host: 3.110.90.168          # Add your remote server IP in GitHub Secrets
-          username: ubuntu      # Add your username in GitHub Secrets
-          key: ${{ secrets.PRIVATE_KEY }}            # Add your private SSH key in GitHub Secrets
-          port: 22                                   # Default SSH port
-          script: |
-            echo "Hello, this is a test file!" > ~/test.txt
-            ls -l ~/test.txt
+          ssh-private-key: ${{ secrets.PRIVATE_KEY }} # Add your private SSH key as a GitHub Secret
+          known-hosts: |
+            3.110.90.168
+
+      # Rsync folder to EC2 server
+      - name: Deploy folder to EC2 instance
+        run: |
+          rsync -avz --exclude=logs/* ./ ubuntu@3.110.90.168:/home/ubuntu/test/backend
