@@ -28,4 +28,4 @@ jobs:
       # Rsync folder to EC2 server excluding .git and .github
       - name: Deploy folder to EC2 instance
         run: |
-          rsync -avz --exclude='.git/*' --exclude='.github/*' ./ ubuntu@3.110.90.168:/home/ubuntu/test/backend
+          rsync -avz --exclude='.git/' --exclude='.github/' ./ ubuntu@3.110.90.168:/home/ubuntu/test/backend
