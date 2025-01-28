@@ -11,5 +11,5 @@ jobs:
       - name: Display GitHub Secrets
         run: |
           echo "Here are the secret names and their masked values:"
-          echo "DEPLOY_PRIVATE_KEY: ${{ secrets.test }}"
-          echo "ANOTHER_SECRET: ${{ secrets.test }}"
+          echo "DEPLOY_PRIVATE_KEY: ${{ secrets.TEST }}"
+          echo "ANOTHER_SECRET: ${{ secrets.TEST }}"
