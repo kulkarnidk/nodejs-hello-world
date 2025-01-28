@@ -17,10 +17,15 @@ jobs:
         uses: webfactory/ssh-agent@v0.5.3
         with:
           ssh-private-key: ${{ secrets.PRIVATE_KEY }} # Add your private SSH key as a GitHub Secret
-          known-hosts: |
-            3.110.90.168
+
+      # Add EC2 instance's SSH key to known hosts (using ssh-keyscan)
+      - name: Add EC2 host to known hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H 3.110.90.168 >> ~/.ssh/known_hosts
+          cat ~/.ssh/known_hosts # For debugging, you can check the added key
 
       # Rsync folder to EC2 server
       - name: Deploy folder to EC2 instance
         run: |
-          rsync -avz ./ ubuntu@3.110.90.168:/home/ubuntu/test/backend
+          rsync -avz --exclude=logs/* ./ ubuntu@3.110.90.168:/home/ubuntu/test/backend
