@@ -13,3 +13,4 @@ jobs:
           echo "Here are the secret names and their masked values:"
           echo "DEPLOY_PRIVATE_KEY: ${{ secrets.TEST }}"
           echo "ANOTHER_SECRET: ${{ secrets.TEST }}"
+          echo "IP: ${{secrets.IP}}"
