@@ -8,11 +8,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Display Environment Variables
-        run: |
-          echo "Displaying Environment Variables:"
-          printenv | grep MY_ENV_ # Replace with a prefix for your custom variables if applicable
-
       - name: Display GitHub Secrets (Names Only)
         run: |
           echo "Secrets Added to This Workflow:"
