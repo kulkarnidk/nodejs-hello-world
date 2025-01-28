@@ -1,0 +1,15 @@
+name: Show GitHub Secrets
+
+on:
+  workflow_dispatch: # Allows you to manually trigger the workflow
+
+jobs:
+  show-secrets:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Display GitHub Secrets
+        run: |
+          echo "Here are the secret names and their masked values:"
+          echo "DEPLOY_PRIVATE_KEY: ${{ secrets.test }}"
+          echo "ANOTHER_SECRET: ${{ secrets.test }}"
