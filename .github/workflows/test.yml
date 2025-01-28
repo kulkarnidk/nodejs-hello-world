@@ -1,24 +1,25 @@
-name: Display GitHub Secrets and Environment Variables
+name: Create File on Remote Server
 
 on:
   workflow_dispatch: # Allows manual triggering of the workflow
 
 jobs:
-  display:
+  create-file:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Display Environment Variable
-        run: |
-          echo "Environment Variable VALUE:"
-          echo $IP
-        env:
-          MY_ENV_VARIABLE: ${{ vars.IP }} # Reference your environment variable here
+      # Checkout the repository (optional if you need code access)
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      - name: Display Secret (Redacted in Logs)
-        run: |
-          echo "Secret VALUE:"
-          echo $MY_SECRET
-        env:
-          MY_SECRET: ${{ secrets.TEST }} # Reference your GitHub secret here
-
+      # Create a file on the remote server
+      - name: SSH into the server and create a file
+        uses: appleboy/ssh-action@v0.1.8
+        with:
+          host: ${{ secrets.REMOTE_HOST }}           # Add your remote server IP in GitHub Secrets
+          username: ${{ secrets.REMOTE_USER }}       # Add your username in GitHub Secrets
+          key: ${{ secrets.PRIVATE_KEY }}            # Add your private SSH key in GitHub Secrets
+          port: 22                                   # Default SSH port
+          script: |
+            echo "Hello, this is a test file!" > ~/test.txt
+            ls -l ~/test.txt
