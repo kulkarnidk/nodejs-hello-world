@@ -16,8 +16,8 @@ jobs:
       - name: SSH into the server and create a file
         uses: appleboy/ssh-action@v0.1.8
         with:
-          host: ${{ secrets.REMOTE_HOST }}           # Add your remote server IP in GitHub Secrets
-          username: ${{ secrets.REMOTE_USER }}       # Add your username in GitHub Secrets
+          host: 65.0.173.138          # Add your remote server IP in GitHub Secrets
+          username: ubuntu      # Add your username in GitHub Secrets
           key: ${{ secrets.PRIVATE_KEY }}            # Add your private SSH key in GitHub Secrets
           port: 22                                   # Default SSH port
           script: |
